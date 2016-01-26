@@ -20,7 +20,7 @@ var board = [
 
 var startGame = function() {
 won = false;
-player = "X"
+player = "X";
 board = [
 "", "", "",
 "", "", "",
@@ -76,21 +76,65 @@ var gameWon = function() {
      ((board[1] === board[4]) && (board[1] === board[8]) && (board[1] !== "")) ||
      ((board[2] === board[5]) && (board[3] === board[8]) && (board[2] !== "")) ||
      ((board[0] === board[4]) && (board[8] === board[2]) && (board[0] !== "")) ||
-     ((board[6] === board[4]) && (board[6] === board[2]) && (board[6] !== ""))){
-    return true;
-  } else {
-  return false;
-}
+     ((board[6] === board[4]) && (board[6] === board[2]) && (board[6] !== "")))
+    {
+      return true;
+    } else {
+    return false;
+  }
 };
 
 
 // RENDER OUR VIEW //
 
 var render = function() {
+  // render turn counter component
+  var turnEl = document.getElementById("turn");
+  turnEl.textContent = "Turn: " + currentPlayer;
 
-}
+  // render winner component
+  var winnerEl = document.getElementById("winner");
+  if (!won) {
+    winnerEl.textContent = "Winner: ? ";
+  } else {
+    winnerEl.textContent = "Winner: " + currentPlayer;
+  };
 
 
+ // render board component
 
+ // var cell0El = document.getElementById("cell0");
+ // cell0EL.textContent = board[0];
 
+ document.getElementById("cell0").textContent = board[0];
+ document.getElementById("cell1").textContent = board[1];
+ document.getElementById("cell2").textContent = board[2];
+ document.getElementById("cell3").textContent = board[3];
+ document.getElementById("cell4").textContent = board[4];
+ document.getElementById("cell5").textContent = board[5];
+ document.getElementById("cell6").textContent = board[6];
+ document.getElementById("cell7").textContent = board[7];
+ document.getElementById("cell8").textContent = board[8];
 
+};
+
+///
+// User Interaction
+//
+//
+
+document.getElementById("restart")
+        .addEventListener("click", function(evt) {
+            startGame();
+            render();
+            });
+
+document.getElementById("board")
+        .addEventListener("click", function(evt) {
+
+var cellEl = evt.target;
+var cellIndex = cellEl.id.slice(-1);
+
+      move(cellIndex);
+      render();
+});
